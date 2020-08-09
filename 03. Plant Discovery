@@ -1,0 +1,37 @@
+numb_of_lines = int(input())
+ 
+dict_of_plants = {}
+for i in range(numb_of_lines):
+    commands = input()
+    tokens = commands.split("<->")
+    dict_of_plants[[tokens[0]][0]] = [tokens[1]]
+    dict_of_plants[tokens[0]].append(float(0))
+command = input()
+while command != "Exhibition":
+    token = command.split(": ")
+    if token[0] == "Rate":
+        token_rate = token[1].split(" - ")
+        if token_rate[0] not in dict_of_plants:
+            print("error")
+        else:
+            if dict_of_plants[token_rate[0]][1] == 0:
+                dict_of_plants[token_rate[0]][1] = float(token_rate[1])
+            else:
+                k = float((int(dict_of_plants[token_rate[0]][1]) + int(token_rate[1]))/2)
+                dict_of_plants[token_rate[0]][1] = k
+    elif token[0] == "Update":
+        token_rate = token[1].split(" - ")
+        if token_rate[0] not in dict_of_plants:
+            print("error")
+        else:
+            dict_of_plants[token_rate[0]][0] = int(token_rate[1])
+    elif token[0] == "Reset":
+        if token[1] not in dict_of_plants:
+            print("error")
+        else:
+            dict_of_plants[token[1]][1] = 0
+    command = input()
+print("Plants for the exhibition:")
+for k, v in sorted(dict_of_plants.items(), key=lambda x: (x[0][2], x[0][3]), reverse=True):                 #([x[0][2]], (-[x[0][3]])), reverse=True):
+    print(f"- {k}; Rarity: {v[0]}; Rating: {v[1]:.2f}")
+ 
